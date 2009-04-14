@@ -22,6 +22,7 @@ def strip_version(version):
     return version.strip().replace(' ', '')
 
 
+
 def ask(question, default=True):
     """Ask the question in y/n form and return True/False.
 
@@ -44,6 +45,21 @@ def ask(question, default=True):
             continue
         return 'y' in input.lower()
 
+
+
+def ask_server(question, servers):
+    """Ask for the server to upload the package to and return the selected
+    server. The listed options are taken from the .pypirc.
+    """
+    while True:
+        print question + ' - '.join(servers)
+        input = raw_input()
+        if not input:
+            if input in servers:
+                return  input
+            print 'Please answer with the name of one of the servers listed./n'
+            continue
+        return input
 
 def fix_rst_heading(heading, below):
     """If the 'below' line looks like a reST line, give it the correct length.
