@@ -54,12 +54,11 @@ def ask_server(question, servers):
     while True:
         print question + ' - '.join(servers)
         input = raw_input()
-        if not input:
-            if input in servers:
-                return  input
-            print 'Please answer with the name of one of the servers listed./n'
-            continue
-        return input
+        if input in servers:
+            return  input
+        print 'Please answer with the name of one of the servers listed./n'
+
+
 
 def fix_rst_heading(heading, below):
     """If the 'below' line looks like a reST line, give it the correct length.
