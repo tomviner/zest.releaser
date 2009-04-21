@@ -16,7 +16,6 @@ try:
 except ImportError:
     collective_dist = False
 
-result = ''
 index_servers = []
 DIST_CONFIG_FILE = '.pypirc'
 
@@ -61,7 +60,7 @@ def main(return_tagdir=False):
         print getoutput(cmd)
         logger.info("Tag checkout placed in %s", tagdir)
 
-
+        result = None
         rc = os.path.join(os.path.expanduser('~'), DIST_CONFIG_FILE)
         if collective_dist and os.path.exists(rc):
             config = ConfigParser()
@@ -77,7 +76,6 @@ def main(return_tagdir=False):
                     server)
                 result = getoutput('%s setup.py mregister sdist mupload -r %s'
                                         % (sys.executable, server))
-
 
         #without collective.dist
         elif utils.package_in_pypi(vcs.name):
