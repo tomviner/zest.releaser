@@ -19,7 +19,7 @@ except ImportError:
 result = ''
 index_servers = []
 DIST_CONFIG_FILE = '.pypirc'
-    
+
 logger = logging.getLogger('release')
 
 
@@ -67,16 +67,18 @@ def main(return_tagdir=False):
             config = ConfigParser()
             config.read(rc)
             raw_index_servers = config.get('distutils', 'index-servers')
-            index_servers = [server.strip() for server in raw_index_servers.split('\n')
-                              if server.strip() != '']
+            index_servers = [
+                server.strip() for server in raw_index_servers.split('\n')
+                if server.strip() != '']
             server = utils.ask_server("Register and upload to which server? ",
                                        index_servers)
             if server:
-                print "Registering and uploading to selected server: %s" % server
+                print "Registering and uploading to selected server: %s" % (
+                    server)
                 result = getoutput('%s setup.py mregister sdist mupload -r %s'
                                         % (sys.executable, server))
 
-                    
+
         #without collective.dist
         elif utils.package_in_pypi(vcs.name):
             if utils.ask("We're on PYPI: make an egg of a fresh tag checkout"):
@@ -90,15 +92,14 @@ def main(return_tagdir=False):
 
             else:
                 logger.info("We're not registered with PyPI.")
-                
+
         if result:
             lines = [line for line in result.split('\n')]
             print 'Showing last few lines...'
             for line in lines[-5:]:
                 print line
-                
+
         os.chdir(original_dir)
         if return_tagdir:
             # At the end, for the benefit of fullrelease.
             return tagdir
-
