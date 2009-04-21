@@ -61,7 +61,6 @@ def main(return_tagdir=False):
         print getoutput(cmd)
         logger.info("Tag checkout placed in %s", tagdir)
 
-        result = None
         rc = os.path.join(os.path.expanduser('~'), DIST_CONFIG_FILE)
         if collective_dist and os.path.exists(rc):
             config = ConfigParser()
@@ -70,13 +69,18 @@ def main(return_tagdir=False):
             index_servers = [
                 server.strip() for server in raw_index_servers.split('\n')
                 if server.strip() != '']
-            server = utils.ask_server("Register and upload to which server? ",
-                                       index_servers)
-            if server:
-                print "Registering and uploading to selected server: %s" % (
-                    server)
-                result = getoutput('%s setup.py mregister sdist mupload -r %s'
-                                        % (sys.executable, server))
+            while True:
+                server = utils.ask_server(
+                    "Register and upload to which server?", index_servers)
+                if server:
+                    print ("Registering and uploading to selected server: "
+                           "%s" % server)
+                    result = getoutput(
+                        '%s setup.py mregister sdist mupload -r %s'
+                        % (sys.executable, server))
+                    utils.show_last_lines(result)
+                else:
+                    break
 
         #without collective.dist
         elif utils.package_in_pypi(vcs.name):
@@ -88,15 +92,9 @@ def main(return_tagdir=False):
                 if utils.ask("Register and upload to pypi"):
                     result = getoutput(
                         '%s setup.py register sdist upload' % sys.executable)
-
+                    utils.show_last_lines(result)
             else:
                 logger.info("We're not registered with PyPI.")
-
-        if result:
-            lines = [line for line in result.split('\n')]
-            print 'Showing last few lines...'
-            for line in lines[-5:]:
-                print line
 
         os.chdir(original_dir)
         if return_tagdir:

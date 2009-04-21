@@ -50,11 +50,21 @@ def ask_server(question, servers):
     server. The listed options are taken from the .pypirc.
     """
     while True:
-        print question + ' - '.join(servers)
+        options = ', '.join(['%s[%d]' % (y, x) for x, y in enumerate(servers)])
+        default = " (Press Enter when finished.)"
+        print question + '\n' + options + default
         input = raw_input()
         if input in servers:
             return input
-        print 'Please answer with the name of one of the servers listed./n'
+        try:
+            server = servers[int(input)]
+            return server
+        except (ValueError, IndexError):
+            pass
+        if not input:
+            return
+        print ("Please answer with the name or index of one of the servers "
+               "listed.\n")
 
 
 def fix_rst_heading(heading, below):
@@ -138,3 +148,10 @@ def package_in_pypi(package):
     else:
         logger.debug("Package not found on pypi: %r", result)
         return False
+
+
+def show_last_lines(result):
+    lines = [line for line in result.split('\n')]
+    print 'Showing last few lines...'
+    for line in lines[-5:]:
+        print line
