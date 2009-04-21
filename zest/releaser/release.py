@@ -13,7 +13,7 @@ from ConfigParser import ConfigParser
 try:
     from collective.dist import mupload
     collective_dist = True
-except ImportErrort:
+except ImportError:
     collective_dist = False
 
 result = ''
