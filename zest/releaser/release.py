@@ -52,7 +52,8 @@ def main(return_tagdir=False):
             sys.exit()
 
     # Check out tag in temp dir
-    if utils.ask("Check out the tag (for tweaks or pypi/localserver upload)"):
+    if utils.ask("Check out the tag (for tweaks or pypi/distutils "
+                 "server upload)"):
         prefix = '%s-%s-' % (vcs.name, version)
         logger.info("Doing a checkout...")
         tagdir = vcs.prepare_checkout_dir(prefix)
