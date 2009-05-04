@@ -45,28 +45,6 @@ def ask(question, default=True):
         return 'y' in input.lower()
 
 
-def ask_server(question, servers):
-    """Ask for the server to upload the package to and return the selected
-    server. The listed options are taken from the .pypirc.
-    """
-    while True:
-        options = ', '.join(['%s[%d]' % (y, x) for x, y in enumerate(servers)])
-        default = " (Press Enter when finished.)"
-        print question + '\n' + options + default
-        input = raw_input()
-        if input in servers:
-            return input
-        try:
-            server = servers[int(input)]
-            return server
-        except (ValueError, IndexError):
-            pass
-        if not input:
-            return
-        print ("Please answer with the name or index of one of the servers "
-               "listed.\n")
-
-
 def fix_rst_heading(heading, below):
     """If the 'below' line looks like a reST line, give it the correct length.
 
