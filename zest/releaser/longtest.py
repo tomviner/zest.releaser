@@ -16,7 +16,7 @@ def show_longdesc():
     filename2 = tempfile.mktemp()
     filename2 = filename2 + '.html'
     error = os.system('%s setup.py --long-description > %s' % (
-            sys.executable, filename1))
+            utils.PYTHON_CALL, filename1))
     if error:
         logging.error('Error generating long description.')
         sys.exit()

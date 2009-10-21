@@ -69,7 +69,7 @@ def main(return_tagdir=False):
         if 'setup.py' in os.listdir(tagdir):
             # See if creating an egg actually works.
             logger.info("Making an egg of a fresh tag checkout.")
-            print commands.getoutput('%s setup.py sdist' % sys.executable)
+            print commands.getoutput('%s setup.py sdist' % utils.PYTHON_CALL)
 
             pypiconfig = pypi.Pypyconfig()
             if not pypiconfig.config:
@@ -92,7 +92,7 @@ def main(return_tagdir=False):
                         "Register and upload to PyPI"):
                         result = commands.getoutput(
                             '%s setup.py register sdist upload'
-                            % sys.executable)
+                            % utils.PYTHON_CALL)
                         utils.show_last_lines(result)
 
                 # If collective.dist is installed (or we are using
@@ -105,11 +105,11 @@ def main(return_tagdir=False):
                         if sys.version_info[:2] >= (2, 6):
                             result = commands.getoutput(
                                 '%s setup.py register sdist upload -r %s'
-                                % (sys.executable, server))
+                                % (utils.PYTHON_CALL, server))
                         else:
                             result = commands.getoutput(
                                 '%s setup.py mregister sdist mupload -r %s'
-                                % (sys.executable, server))
+                                % (utils.PYTHON_CALL, server))
                         utils.show_last_lines(result)
 
         os.chdir(original_dir)

@@ -21,8 +21,8 @@ class BaseVersionControl(object):
             # First run egg_info, as that may get rid of some warnings
             # that otherwise end up in the extracted version, like
             # UserWarnings.
-            ignore = getoutput('%s setup.py egg_info' % sys.executable)
-            version = getoutput('%s setup.py --version' % sys.executable)
+            ignore = getoutput('%s setup.py egg_info' % zest.releaser.utils.PYTHON_CALL)
+            version = getoutput('%s setup.py --version' % zest.releaser.utils.PYTHON_CALL)
             return zest.releaser.utils.strip_version(version)
 
     def get_setup_py_name(self):
@@ -30,8 +30,8 @@ class BaseVersionControl(object):
             # First run egg_info, as that may get rid of some warnings
             # that otherwise end up in the extracted name, like
             # UserWarnings.
-            ignore = getoutput('%s setup.py egg_info' % sys.executable)
-            return getoutput('%s setup.py --name' % sys.executable)
+            ignore = getoutput('%s setup.py egg_info' % zest.releaser.utils.PYTHON_CALL)
+            return getoutput('%s setup.py --name' % zest.releaser.utils.PYTHON_CALL)
 
     def get_version_txt_version(self):
         version_file = self.filefind('version.txt')

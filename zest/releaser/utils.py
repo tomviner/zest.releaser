@@ -7,6 +7,8 @@ logger = logging.getLogger('utils')
 
 WRONG_IN_VERSION = ['svn', 'dev', '(']
 
+PYTHON_CALL = 'PYTHONPATH=%s %s' % (':'.join(sys.path) , sys.executable)
+
 
 def loglevel():
     """Return DEBUG when -v is specified, INFO otherwise"""
