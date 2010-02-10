@@ -7,7 +7,7 @@ version = '3.4dev'
 
 # Adapted from
 # http://stackoverflow.com/questions/1162338/whats-the-right-way-to-use-unicode-metadata-in-setup-py
-class UltraMagicString(object):
+class UltraMagicString(str):
     # Catch-22:
     # - if I return Unicode, python setup.py --long-description as well
     #   as python setup.py upload fail with a UnicodeEncodeError
