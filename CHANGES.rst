@@ -4,7 +4,7 @@ Changelog for zest.releaser
 3.55 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- Dummy change.
 
 
 3.54 (2014-12-29)
